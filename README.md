@@ -1,5 +1,4 @@
-# maynardlean4 — Unconditional Bounded Prime Gaps 
-($H = 246$) in Lean 4
+# maynardlean4: Unconditional Bounded Prime Gaps ($H = 246$) in Lean 4
 
 [![Trustless Verification CI](https://github.com/nil-commits/maynardlean4/actions/workflows/ci.yml/badge.svg)](https://github.com/nil-commits/maynardlean4/actions/workflows/ci.yml)
 
