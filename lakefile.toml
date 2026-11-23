@@ -34,5 +34,9 @@ name = "PrimeGapsCert"
 roots = ["PrimeGapsCert"]
 
 [[lean_lib]]
+name = "PrimeGaps"
+roots = ["PrimeGaps"]
+
+[[lean_lib]]
 name = "MaynardDock"
 roots = ["MaynardDock"]

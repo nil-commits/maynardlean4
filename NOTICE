@@ -3,7 +3,7 @@ Copyright 2026 nil-commits
 
 This repository includes third-party components under their original licenses:
 
-1. PrimeGapsTheory/ and PrimeGapsCert/
+1. PrimeGaps/, PrimeGapsTheory/, and PrimeGapsCert/
    Vendored unmodified from AxiomMath/PrimeGapsLib
    https://github.com/AxiomMath/PrimeGapsLib
    Copyright 2026 Axiom Math — Licensed under the Apache License, Version 2.0.
