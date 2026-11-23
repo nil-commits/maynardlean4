@@ -1,5 +1,6 @@
 name = "MaynardDock"
 version = "0.1.0"
+defaultTargets = ["MaynardDock", "Solution"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -7,23 +8,21 @@ autoImplicit = false
 relaxedAutoImplicit = false
 maxHeartbeats = 0
 maxSynthPendingDepth = 3
-weak.linter.flexible = true
-weak.linter.mathlibStandardSet = true
-weak.linter.style.header = false
-
-[[require]]
-name = "rh_direct"
-path = "../alpoge-rh-golf"
-
-[[require]]
-name = "PrimeNumberTheoremAnd"
-git = "https://github.com/AxiomMath/PrimeNumberTheoremAnd.git"
-rev = "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed"
 
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4"
 rev = "0df444a360eaa60ab8c11dca51a86af692955474"
+
+[[require]]
+name = "PrimeNumberTheoremAnd"
+git = "https://github.com/nil-commits/PrimeNumberTheoremAnd.git"
+rev = "6c89d5699e16114be6ec6f1b4ae48818a5ec8cc3"
+
+[[lean_lib]]
+name = "RHDirect"
+roots = ["RHDirect"]
+globs = ["RHDirect", "RHDirect.*"]
 
 [[lean_lib]]
 name = "PrimeGapsTheory"
@@ -40,3 +39,12 @@ roots = ["PrimeGaps"]
 [[lean_lib]]
 name = "MaynardDock"
 roots = ["MaynardDock"]
+leanOptions = { weak.linter.flexible = true, weak.linter.mathlibStandardSet = true, weak.linter.style.header = false }
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

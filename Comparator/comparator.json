@@ -1,0 +1,11 @@
+{
+    "challenge_module": "Challenge",
+    "solution_module": "Solution",
+    "theorem_names": [
+        "unconditional_prime_gap_le_246",
+        "bounded_prime_gaps_246_unconditional",
+        "frequently_consecutive_prime_gap_le_246"
+    ],
+    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+    "enable_nanoda": true
+}

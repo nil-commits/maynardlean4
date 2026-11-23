@@ -1,0 +1,85 @@
+name: Trustless Verification CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Build, leanchecker, Challenge-Match & Nanoda (Rust kernel)
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      LEAN_NUM_THREADS: "2"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build & verify with Lean Action (Mathlib cache + leanchecker + axiom-audit)
+        uses: leanprover/lean-action@v1
+        with:
+          use-mathlib-cache: true
+          build-args: "MaynardDock Solution MaynardDock.Audit"
+          leanchecker: true
+          leanchecker-args: "MaynardDock.Capstone MaynardDock.Capstone246 Solution"
+          axiom-audit: true
+          axiom-audit-root: "MaynardDock"
+          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+
+      - name: Verify Solution matches Challenge (pure Mathlib statements + axioms)
+        run: |
+          lake build Challenge
+          lake env lean --run scripts/verify_challenge.lean
+
+      - name: Kernel-check Solution with leanchecker --fresh
+        run: |
+          lake env leanchecker --fresh Solution
+
+      - name: Independent Rust kernel verification (lean4export + nanoda)
+        run: |
+          set -euo pipefail
+          WORKDIR="$(mktemp -d)"
+          trap 'rm -rf "$WORKDIR"' EXIT
+
+          if ! command -v cargo >/dev/null 2>&1; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable --profile minimal
+            source "$HOME/.cargo/env"
+          fi
+
+          # Build lean4export with this repo's exact Lean toolchain
+          git clone --depth 1 --branch v4.33.0-rc2 https://github.com/leanprover/lean4export.git "$WORKDIR/lean4export"
+          cp lean-toolchain "$WORKDIR/lean4export/"
+          (cd "$WORKDIR/lean4export" && lake build)
+
+          # Build nanoda independent Rust type checker (master, JSON export format)
+          git clone --depth 1 https://github.com/ammkrn/nanoda_lib.git "$WORKDIR/nanoda_lib"
+          (cd "$WORKDIR/nanoda_lib" && cargo build --release)
+
+          # Export the transitive closure of the three Solution theorems
+          lake env "$WORKDIR/lean4export/.lake/build/bin/lean4export" Solution \
+            -- unconditional_prime_gap_le_246 bounded_prime_gaps_246_unconditional frequently_consecutive_prime_gap_le_246 \
+            > "$WORKDIR/solution.export"
+          echo "Export size: $(wc -c < "$WORKDIR/solution.export") bytes, $(wc -l < "$WORKDIR/solution.export") lines"
+
+          # Permit ONLY the three standard Lean axioms (no sorryAx, no Lean.trustCompiler)
+          cat > "$WORKDIR/nanoda.json" <<EOF
+          {
+            "export_file_path": "$WORKDIR/solution.export",
+            "use_stdin": false,
+            "num_threads": 2,
+            "stack_size_bytes": 134217728,
+            "permitted_axioms": ["propext", "Classical.choice", "Quot.sound"],
+            "unpermitted_axiom_hard_error": false,
+            "nat_extension": true,
+            "string_extension": true,
+            "print_success_message": true
+          }
+          EOF
+
+          "$WORKDIR/nanoda_lib/target/release/nanoda_bin" "$WORKDIR/nanoda.json"
