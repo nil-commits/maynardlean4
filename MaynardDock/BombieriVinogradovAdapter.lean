@@ -4,7 +4,7 @@ MaynardDock — Wave 1 adapter.
 Derives the `BombieriVinogradov` proposition consumed by the vendored
 PrimeGapsTheory (AxiomMath/PrimeGapsLib) from the *unconditional* Bombieri–
 Vinogradov theorem of `RHDirect.Stage11BombieriVinogradov`
-(`rh_direct v1.2.0`, clone at ../alpoge-rh-golf).
+(`rh_direct v1.2.0`, minimal analytic-NT slice vendored under `RHDirect/`).
 
 Mathematical content.  Fix `0 < θ < 1/2` and `A ≥ 1`.  From
 `RHDirect.bombieri_vinogradov (A + 8)` we obtain `Bv, Cv > 0` with
