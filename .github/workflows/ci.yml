@@ -19,7 +19,7 @@ jobs:
       LEAN_NUM_THREADS: "2"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build & verify with Lean Action (Mathlib cache + leanchecker + axiom-audit)
         uses: leanprover/lean-action@v1
