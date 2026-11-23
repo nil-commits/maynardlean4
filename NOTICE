@@ -1,0 +1,15 @@
+maynardlean4 (MaynardDock)
+Copyright 2026 nil-commits
+
+This repository includes third-party components under their original licenses:
+
+1. PrimeGapsTheory/ and PrimeGapsCert/
+   Vendored unmodified from AxiomMath/PrimeGapsLib
+   https://github.com/AxiomMath/PrimeGapsLib
+   Copyright 2026 Axiom Math — Licensed under the Apache License, Version 2.0.
+
+2. External Lean dependencies (fetched via Lake):
+   - nil-commits/alpoge-rh-golf (tag rh-direct-v1.2.0): unconditional
+     Bombieri-Vinogradov theorem in RHDirect.Stage11BombieriVinogradov.
+   - AxiomMath/PrimeNumberTheoremAnd (rev 2667e414c38e5a5dc9aa1946f16f13001e5cd3ed).
+   - leanprover-community/mathlib4 (rev 0df444a360eaa60ab8c11dca51a86af692955474).

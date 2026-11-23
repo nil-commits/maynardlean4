@@ -1,0 +1,9 @@
+.lake/
+build/
+*.olean
+*.ilean
+*.c
+*.o
+*.trace
+*.hash
+.DS_Store

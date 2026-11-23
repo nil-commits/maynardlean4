@@ -1,0 +1,38 @@
+name = "MaynardDock"
+version = "0.1.0"
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+relaxedAutoImplicit = false
+maxHeartbeats = 0
+maxSynthPendingDepth = 3
+weak.linter.flexible = true
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false
+
+[[require]]
+name = "rh_direct"
+path = "../alpoge-rh-golf"
+
+[[require]]
+name = "PrimeNumberTheoremAnd"
+git = "https://github.com/AxiomMath/PrimeNumberTheoremAnd.git"
+rev = "2667e414c38e5a5dc9aa1946f16f13001e5cd3ed"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "0df444a360eaa60ab8c11dca51a86af692955474"
+
+[[lean_lib]]
+name = "PrimeGapsTheory"
+roots = ["PrimeGapsTheory"]
+
+[[lean_lib]]
+name = "PrimeGapsCert"
+roots = ["PrimeGapsCert"]
+
+[[lean_lib]]
+name = "MaynardDock"
+roots = ["MaynardDock"]
